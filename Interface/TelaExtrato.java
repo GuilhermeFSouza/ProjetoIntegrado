@@ -3,6 +3,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,7 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class TelaExtrato extends JFrame {
+public class TelaExtrato extends JFrame implements ItemListener{
 	//Hierarquia dos JPanel´s
 	private JPanel painelPrincipal;
 		private JPanel painelTopo;
@@ -31,14 +33,14 @@ public class TelaExtrato extends JFrame {
 	private JButton btVoltar;
 	private JButton btImprimir;
 	private JRadioButton opcData;
-	private JRadioButton opcCincoDias;
-	private JRadioButton opcDezDias;
+	private JRadioButton opcSeteDias;
+	private JRadioButton opcQuinzeDias;
 	private JTextField txtPesquisar;
 	private JLabel lblData;
 	private DefaultTableModel modelo = new DefaultTableModel();
 	private ButtonGroup group;	
 	private JLabel frase;
-	
+			selecionaOpcaoHandler	handler = new selecionaOpcaoHandler();
 	public TelaExtrato() {
 		super("Extrato");
 		frase = new JLabel("<NOME DO CLIENTE> - Consultar Extrato");
@@ -64,19 +66,21 @@ public class TelaExtrato extends JFrame {
 			painelSearch.add(txtPesquisar);
 			btPesquisar = new JButton("Pesquisar");
 			painelSearch.add(btPesquisar);
+			painelSearch.setVisible(false);
 		
 		painelRadio.setLayout(new GridLayout(3, 1));
 			painelRadio.setVisible(true);
 			opcData = new JRadioButton("Data",true);
-			opcCincoDias = new JRadioButton("5 Dias",false);
-			opcDezDias = new JRadioButton("10 Dias",false);
+			opcData.addItemListener(handler);
+			opcSeteDias = new JRadioButton("7 Dias",false);
+			opcQuinzeDias = new JRadioButton("15 Dias",false);
 			painelRadio.add(opcData);
-			painelRadio.add(opcCincoDias);
-			painelRadio.add(opcDezDias);
+			painelRadio.add(opcSeteDias);
+			painelRadio.add(opcQuinzeDias);
 			ButtonGroup group = new ButtonGroup();
 			group.add(opcData);
-			group.add(opcCincoDias);
-			group.add(opcDezDias);
+			group.add(opcSeteDias);
+			group.add(opcQuinzeDias);
 			//painelRadio.setAlignmentX(CENTER_ALIGNMENT);
 		painelTopo.add(BorderLayout.NORTH, frasejp);
 		painelTopo.add(BorderLayout.WEST,painelRadio);
@@ -140,4 +144,19 @@ public class TelaExtrato extends JFrame {
 		//lc.pack();
 		lc.setSize(800,600);
 	}
+
+	private class selecionaOpcaoHandler implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent event) {
+			if(opcData.isSelected()){
+				painelSearch.setVisible(true);
+			}else{
+				painelSearch.setVisible(false);
+			}
+		}
+		
+	}
+
 }
+
