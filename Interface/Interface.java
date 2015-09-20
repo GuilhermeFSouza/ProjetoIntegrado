@@ -1,7 +1,7 @@
 //Escrito em 21/04/15 - Guilherme F. Souza
 public class Interface {
 public static void main(String args[]){
-	SelecaoIdiomas idiomas = new SelecaoIdiomas();
+	/*SelecaoIdiomas idiomas = new SelecaoIdiomas();
 		idiomas.pack();
 		idiomas.setVisible(true);
 		idiomas.setLocation(0, 0);
@@ -23,12 +23,12 @@ public static void main(String args[]){
 	ConsultarSaldo saldo = new ConsultarSaldo();
 		saldo.setVisible(true);
 		saldo.setLocationRelativeTo(null);
-		saldo.setSize(800,600);
+		saldo.setSize(800,600); */
 	TelaExtrato extrato = new TelaExtrato();
 		extrato.setVisible(true);
 		extrato.setLocationRelativeTo(null);
 		extrato.setSize(800,600);
-	TelaExtrairEstatistica Estat = new TelaExtrairEstatistica();
+	/*TelaExtrairEstatistica Estat = new TelaExtrairEstatistica();
 		Estat.setVisible(true);
 		Estat.setLocationRelativeTo(null);
 		Estat.setSize(800,600);	
@@ -51,6 +51,6 @@ public static void main(String args[]){
 	MenuOperador op = new MenuOperador();
 		op.setVisible(true);
 		op.setLocationRelativeTo(null);
-		op.setSize(800,600);
+		op.setSize(800,600);*/
 	}
 }

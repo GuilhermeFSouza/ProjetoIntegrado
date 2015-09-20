@@ -1,6 +1,8 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuOperador extends JFrame{
 	private JPanel Base;
@@ -13,10 +15,13 @@ public class MenuOperador extends JFrame{
 	private JButton opcEstat;
 	private JLabel frase;
 	private JButton Cancelar;
+	private ImageIcon ImgUsr;
 	
 	MenuOperador(){
 		super("Menu Opções");
-		frase = new JLabel("<NOME DO FUNCIONÁRIO>");
+		ImgUsr = new ImageIcon("Interface/login.png");
+		frase = new JLabel("<NOME DO FUNCIONÁRIO>", ImgUsr, SwingConstants.CENTER);
+		frase.setHorizontalAlignment(SwingConstants.LEFT);
 		opcNotas = new JButton("Extrair Relatorio de Notas");
 		opcEstat = new JButton("Extrair Relatório de Estatísticas");
 		Cancelar = new JButton("Cancelar");
@@ -25,21 +30,34 @@ public class MenuOperador extends JFrame{
 		Conteudo = new JPanel();
 		TopoEsq = new JPanel();
 		Baixo = new JPanel();
-		TopoEsq.setLayout(new FlowLayout(FlowLayout.LEFT));
-			TopoEsq.add(frase);
-		Topo.setLayout(new BorderLayout());
-			Topo.add(BorderLayout.WEST, TopoEsq);
-		Conteudo.setLayout(new GridLayout(1,2,20,20));
+		Conteudo.setLayout(new FlowLayout(FlowLayout.CENTER));
 			Conteudo.add(opcNotas);
 			Conteudo.add(opcEstat);
 		Baixo.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			Baixo.add(Cancelar);
-		Base.setLayout(new BorderLayout());
-			Base.add(BorderLayout.NORTH, Topo);
-			Base.add(BorderLayout.CENTER, Conteudo);
-			Base.add(BorderLayout.SOUTH, Baixo);
-		this.setLayout(new GridLayout(3,1,20,20));
-		this.getContentPane().add(Base);
+		this.setLayout(new BorderLayout());
+			this.add(BorderLayout.NORTH, frase);
+			this.add(BorderLayout.CENTER, Conteudo);
+			this.add(BorderLayout.SOUTH, Baixo);
+		//this.setLayout(new BorderLayout());
+		//this.getContentPane().add();
+			setSize(800,600);
+			setVisible(true);
+		
+		opcNotas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaNotas TN = new TelaNotas();
+				dispose();
+			}
+		});
+		
+		opcEstat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			 TelaExtrairEstatistica ee = new TelaExtrairEstatistica();
+			 dispose();
+			}
+		});
+			
 	}
 	public static void main(String[] args) {
 		MenuOperador us = new MenuOperador();

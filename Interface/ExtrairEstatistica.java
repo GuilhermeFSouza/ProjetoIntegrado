@@ -1,8 +1,10 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ExtrairEstatistica extends JFrame{
+public class ExtrairEstatistica extends JFrame implements ActionListener{
 	JLabel frase;
 	JButton Imprimir;
 	JButton Voltar;
@@ -10,11 +12,13 @@ public class ExtrairEstatistica extends JFrame{
 	JPanel Botoes;
 	JPanel Principal;
 	JPanel Conteudo;
+	private ImageIcon ImgUsr;
 	
 	ExtrairEstatistica(){
 		super("Extrair Estatistica");
-		frase = new JLabel("<IDENTIFICAÇÃO DO USUARIO> - Extrair Estatística do Terminal");
-		frase.setHorizontalAlignment(0);
+		ImgUsr = new ImageIcon("Interface/login.png");
+		frase = new JLabel("<IDENTIFICAÇÃO DO USUARIO> - Extrair Estatística do Terminal", ImgUsr, SwingConstants.CENTER);
+		frase.setHorizontalAlignment(SwingConstants.LEFT);
 		Imprimir = new JButton("Imprimir");
 		Terminar = new JButton("Terminar");
 		Voltar = new JButton("Voltar");
@@ -34,5 +38,13 @@ public class ExtrairEstatistica extends JFrame{
 		
 		getContentPane().add(Principal);
 		setVisible(true);
+		setSize(800, 600);
+		
+		Voltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuOperador mo = new MenuOperador();
+				dispose();
+			}
+		});
 	}
 }

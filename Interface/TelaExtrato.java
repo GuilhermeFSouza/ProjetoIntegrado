@@ -7,6 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaExtrato extends JFrame implements ItemListener{
@@ -24,7 +26,8 @@ public class TelaExtrato extends JFrame implements ItemListener{
 	private JPanel painelPrincipal;
 		private JPanel painelTopo;
 			private JPanel frasejp;
-			private JPanel painelRadio; private JPanel painelSearch;
+			private JPanel painelAlinhaPesquisa;
+				private JPanel painelRadio; private JPanel painelSearch;
 		private JTable tabela;
 		private JPanel painelBotoes;
 	//private JPanel radioGroup;
@@ -40,10 +43,12 @@ public class TelaExtrato extends JFrame implements ItemListener{
 	private DefaultTableModel modelo = new DefaultTableModel();
 	private ButtonGroup group;	
 	private JLabel frase;
+	private ImageIcon ImgUsr;
 			selecionaOpcaoHandler	handler = new selecionaOpcaoHandler();
 	public TelaExtrato() {
 		super("Extrato");
-		frase = new JLabel("<NOME DO CLIENTE> - Consultar Extrato");
+		ImgUsr = new ImageIcon("Interface/login.png");
+		frase = new JLabel("<NOME DO CLIENTE> - Consultar Extrato", ImgUsr, SwingConstants.LEFT);
 		painelRadio = new JPanel();
 		painelSearch = new JPanel();
 		painelPrincipal = new JPanel();
@@ -54,6 +59,7 @@ public class TelaExtrato extends JFrame implements ItemListener{
 	}
 
 	public void criaJanela() {
+		painelAlinhaPesquisa = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		painelPrincipal.setLayout(new BorderLayout());
 		painelTopo.setLayout(new FlowLayout(FlowLayout.LEFT));
 		frasejp.setLayout(new FlowLayout());
@@ -81,10 +87,13 @@ public class TelaExtrato extends JFrame implements ItemListener{
 			group.add(opcData);
 			group.add(opcSeteDias);
 			group.add(opcQuinzeDias);
+			painelRadio.setAlignmentX(SwingConstants.LEFT);
 			//painelRadio.setAlignmentX(CENTER_ALIGNMENT);
+			painelAlinhaPesquisa.add(painelRadio);
+			painelAlinhaPesquisa.add(painelSearch);
 		painelTopo.add(BorderLayout.NORTH, frasejp);
-		painelTopo.add(BorderLayout.WEST,painelRadio);
-		painelTopo.add(BorderLayout.CENTER,painelSearch);
+		painelTopo.add(BorderLayout.WEST,painelAlinhaPesquisa);
+	//	painelTopo.add(BorderLayout.CENTER,painelSearch);
 		//painelSearch.setAlignmentX(LEFT_ALIGNMENT);
 		barraRolagem = new JScrollPane(tabela);
 		painelBotoes= new JPanel();
@@ -93,15 +102,22 @@ public class TelaExtrato extends JFrame implements ItemListener{
 			btImprimir = new JButton("Imprimir");
 			painelBotoes.add(btVoltar);
 			painelBotoes.add(btImprimir);
-		
 		painelPrincipal.add(BorderLayout.NORTH,painelTopo);
 		painelPrincipal.add(BorderLayout.SOUTH,painelBotoes);
 		painelPrincipal.add(BorderLayout.CENTER,barraRolagem);
 		getContentPane().add(painelPrincipal);
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(500, 320);
+		setSize(800, 600);
 		setVisible(true);
+		
 		btPesquisar.addActionListener(new BtPesquisarListener());
+		
+		btVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuUsuario MU = new MenuUsuario();
+				dispose();
+			}
+		});
 	}
 
 	private void criaJTable() {

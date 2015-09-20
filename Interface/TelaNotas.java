@@ -1,17 +1,21 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 
 
-public class TelaNotas extends JFrame {
+public class TelaNotas extends JFrame implements ActionListener{
 	private JPanel painelPrincipal;
 	private JPanel painelTopo;
 	private JPanel painelSearch;
@@ -22,6 +26,7 @@ public class TelaNotas extends JFrame {
 	private JButton btVoltar;
 	private JLabel lblNomeCliente;
 	private DefaultTableModel modelo = new DefaultTableModel();
+	private ImageIcon ImgUsr;
 
 	public TelaNotas() {
 		super(" Relatorio de Notas ");
@@ -35,8 +40,8 @@ public class TelaNotas extends JFrame {
 	public void criaJanela() {
 		painelPrincipal.setLayout(new BorderLayout());
 		painelTopo.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-		lblNomeCliente = new JLabel("<Nome do Cliente>");
+		ImgUsr = new ImageIcon("Interface/login.png");
+		lblNomeCliente = new JLabel("<Nome do Cliente>", ImgUsr, SwingConstants.CENTER);
 
 		painelTopo.add(lblNomeCliente);
 		painelTopo.add(BorderLayout.CENTER,painelSearch);
@@ -54,8 +59,15 @@ public class TelaNotas extends JFrame {
 		painelPrincipal.add(BorderLayout.CENTER,barraRolagem);
 		getContentPane().add(painelPrincipal);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(500, 320);
+		setSize(800, 600);
 		setVisible(true);
+		
+		btVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuOperador mo = new MenuOperador();
+				dispose();
+			}
+		});
 	}
 
 	private void criaJTable() {
