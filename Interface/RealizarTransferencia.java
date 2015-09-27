@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class RealizarTransferencia extends JFrame implements ActionListener{
 	JLabel frase;
@@ -22,19 +24,22 @@ public class RealizarTransferencia extends JFrame implements ActionListener{
 	JPanel Conteudo;
 	JPanel Opc;
 	ImageIcon ImgUsr;
+	public Locale locale;
+	public ResourceBundle BundleLocale;
 	
-	RealizarTransferencia(){
-		super("Realizar Transferencia");
+	RealizarTransferencia(Locale localeParam, ResourceBundle bundleParam){
+		super(bundleParam.getString("tela.realizarTransferencia.titulo"));
+		setLocation(localeParam, bundleParam);
 		ImgUsr = new ImageIcon("Interface/login.png");
-		frase = new JLabel("<NOME DO CLIENTE> - Realizar Transferencia", ImgUsr, SwingConstants.CENTER);
+		frase = new JLabel("<NOME DO CLIENTE> - "+BundleLocale.getString("tela.realizarTransferencia.titulo"), ImgUsr, SwingConstants.CENTER);
 		frase.setHorizontalAlignment(SwingConstants.LEFT);
-		Imprimir = new JButton("Imprimir");
-		Terminar = new JButton("Terminar");
-		Voltar = new JButton("Voltar");
-		lblBanco = new JLabel("Banco: ");
-		lblAgencia = new JLabel("Agencia: ");
-		lblConta = new JLabel("Conta: ");
-		lblValor = new JLabel("Valor: ");
+		Imprimir = new JButton(BundleLocale.getString("tela.button.imprimir"));
+		Terminar = new JButton(BundleLocale.getString("tela.button.terminar"));
+		Voltar = new JButton(BundleLocale.getString("tela.button.voltar"));
+		lblBanco = new JLabel(BundleLocale.getString("tela.realizarTransferencia.label1"));
+		lblAgencia = new JLabel(BundleLocale.getString("tela.realizarTransferencia.label2"));
+		lblConta = new JLabel(BundleLocale.getString("tela.realizarTransferencia.label3"));
+		lblValor = new JLabel(BundleLocale.getString("tela.realizarTransferencia.label4"));
 		tfBanco = new JTextField(10);
 		tflAgencia = new JTextField(10);
 		tflConta = new JTextField(10);
@@ -79,7 +84,7 @@ public class RealizarTransferencia extends JFrame implements ActionListener{
 		
 		Voltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuUsuario MU = new MenuUsuario();
+				MenuUsuario MU = new MenuUsuario(locale, BundleLocale);
 				dispose();
 			}
 		});
@@ -87,6 +92,11 @@ public class RealizarTransferencia extends JFrame implements ActionListener{
 		getContentPane().add(Principal);
 		setSize(800, 600);
 		setVisible(true);
+	}
+	
+	public void setLocation(Locale locale, ResourceBundle bundle){
+		this.locale = locale;
+		this.BundleLocale = bundle;
 	}
 	
 	public static void main(String[] args) {

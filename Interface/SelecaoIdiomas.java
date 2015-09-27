@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 //import java.awt.event.ActionListener;
 //import java.awt.event.ActionEvent; 
 
@@ -18,10 +21,22 @@ public class SelecaoIdiomas extends JFrame implements ActionListener{
 	private ImageIcon ImgEngl;
 	private ImageIcon ImgSpan;
 	private JLabel frase;
+	private Locale ptBr;
+	private Locale enUs;
+	private Locale spCa;
+	private ResourceBundle bundlePtBr;
+	private ResourceBundle bundleEnUs;
+	private ResourceBundle bundleSpCa;
 	
 	public SelecaoIdiomas(){
 		super("Seleção de Idiomas");
-		frase = new JLabel("Escolha seu idioma: (Choose your language)");
+		ptBr = new Locale("pt","BR");
+		enUs = new Locale("en","US");
+		spCa = new Locale("sp","CA");
+		bundlePtBr = ResourceBundle.getBundle("messages", ptBr);
+		bundleEnUs = ResourceBundle.getBundle("messages", enUs);
+		bundleSpCa = ResourceBundle.getBundle("messages", spCa);
+		frase = new JLabel("Escolha seu idioma:");
 			frase.setHorizontalAlignment(SwingConstants.CENTER);
 			frase.setVerticalAlignment(SwingConstants.CENTER);
 		JPanel CentroGridLayout = new JPanel(new FlowLayout(FlowLayout.CENTER, 50,100));
@@ -52,26 +67,31 @@ public class SelecaoIdiomas extends JFrame implements ActionListener{
 		
 		pt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login ln = new Login();
+				Login ln = new Login(ptBr, bundlePtBr);
+				MenuOperador mo = new MenuOperador(ptBr,bundlePtBr);
+				//ln.setLocation(ptBr, bundlePtBr);
 				dispose();
 			}
 		});
 		
 		en.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login ln = new Login();
+				Login ln = new Login(enUs, bundleEnUs);
+				MenuOperador mo = new MenuOperador(enUs,bundleEnUs);
+				//	ln.setLocation(enUs, bundleEnUs);
 				dispose();
 			}
 		});
 		
 		sp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login ln = new Login();
+				Login ln = new Login(spCa, bundleSpCa);
+				MenuOperador mo = new MenuOperador(spCa,bundleSpCa);
+			//	ln.setLocation(spCa, bundleSpCa);
 				dispose();
 			}
 		});
 	}
-
 
 public static void main(String[] args){
 	SelecaoIdiomas SI = new SelecaoIdiomas();

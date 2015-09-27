@@ -2,6 +2,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 
@@ -15,11 +17,15 @@ public class GerarCodigo extends JFrame implements ActionListener{
 	private JButton b5;
 	private JButton ok;
 	private JButton cancelar;
-	public GerarCodigo(){
-		super("Gerar Codigo");
-		frase = new JLabel("Este é seu primeiro acesso, gere seu código");
+	public Locale locale;
+	public ResourceBundle BundleLocale;
+	
+	public GerarCodigo(Locale localeParam, ResourceBundle bundleParam){
+		super(bundleParam.getString("tela.gerarCodigo.titulo"));
+		setLocation(localeParam, bundleParam);
+		frase = new JLabel(bundleParam.getString("tela.gerarCodigo.label1"));
 		frase.setHorizontalAlignment(0);
-		frase2 = new JLabel("Gere seu código selecionando os botoes abaixo:");
+		frase2 = new JLabel(bundleParam.getString("tela.gerarCodigo.label2"));
 		frase2.setVerticalAlignment(FlowLayout.LEADING);
 		frase2.setHorizontalAlignment(SwingConstants.CENTER);
 		JPanel Esquerdo = new JPanel(new GridLayout(3,1));
@@ -32,13 +38,13 @@ public class GerarCodigo extends JFrame implements ActionListener{
 		JPanel Botoes = new JPanel(new GridLayout(1, 5,10,10));
 		JPanel Direito = new JPanel(new GridLayout(3,1));
 		JPanel Baixo = new JPanel(new FlowLayout());
-		b1 = new JButton("0 ou 1");
-		b2 = new JButton("2 ou 3");
-		b3 = new JButton("4 ou 5");
-		b4 = new JButton("6 ou 7");
-		b5 = new JButton("8 ou 9");
+		b1 = new JButton("0 "+ bundleParam.getString("tela.gerarCodigo.buttonCod") + " 1");
+		b2 = new JButton("2 "+ bundleParam.getString("tela.gerarCodigo.buttonCod") + " 3");
+		b3 = new JButton("4 "+ bundleParam.getString("tela.gerarCodigo.buttonCod") + " 5");
+		b4 = new JButton("6 "+ bundleParam.getString("tela.gerarCodigo.buttonCod") + " 7");
+		b5 = new JButton("8 "+ bundleParam.getString("tela.gerarCodigo.buttonCod") + " 9");
 		ok = new JButton("OK");
-		cancelar = new JButton("Cancelar");
+		cancelar = new JButton(bundleParam.getString("tela.button.cancelar"));
 		Centro.add(CentroGrid);
 		Botoes.add(b1);
 		Botoes.add(b2);
@@ -69,8 +75,13 @@ public class GerarCodigo extends JFrame implements ActionListener{
 		ok.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				MenuUsuario MU = new MenuUsuario();
+				MenuUsuario MU = new MenuUsuario(locale, BundleLocale);
 			}
 		});
 	}
+	public void setLocation(Locale locale, ResourceBundle bundle){
+		this.locale = locale;
+		this.BundleLocale = bundle;
+	}
+	
 }

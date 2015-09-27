@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class MenuUsuario extends JFrame implements ActionListener{
 	private JPanel Base;
@@ -24,8 +26,11 @@ public class MenuUsuario extends JFrame implements ActionListener{
 	private ImageIcon ImgExtrato;
 	private ImageIcon ImgTransf;
 	private ImageIcon ImgDebito;
-	MenuUsuario(){
-		super("Menu Opções");
+	public Locale locale;
+	public ResourceBundle BundleLocale;
+	MenuUsuario(Locale localeParam, ResourceBundle bundleParam){
+		super(bundleParam.getString("tela.menuOpcoes.titulo"));
+		setLocation(localeParam, bundleParam);
 		ImgUsr = new ImageIcon("Interface/login.png");
 		ImgSaque = new ImageIcon("Interface/saque");
 		ImgSaldo = new ImageIcon("Interface/saldo");
@@ -33,18 +38,18 @@ public class MenuUsuario extends JFrame implements ActionListener{
 		ImgTransf = new ImageIcon("Interface/transferencia");
 		ImgDebito = new ImageIcon("Interface/debitoAut");
 		frase = new JLabel("<NOME DO CLIENTE>", ImgUsr, SwingConstants.CENTER);
-		opcSaque = new JButton("Saque");
+		opcSaque = new JButton(BundleLocale.getString("tela.menuOpcoes.button1"));
 			opcSaque.setIcon(ImgSaque);
-		opcSaldo = new JButton("Saldo");
+		opcSaldo = new JButton(BundleLocale.getString("tela.menuOpcoes.button2"));
 			opcSaldo.setIcon(ImgSaldo);
-		opcExtrato = new JButton("Extrato");
+		opcExtrato = new JButton(BundleLocale.getString("tela.menuOpcoes.button5"));
 			opcExtrato.setIcon(ImgExtrato);
-		opcTransf = new JButton("Transferência");
+		opcTransf = new JButton(BundleLocale.getString("tela.menuOpcoes.button3"));
 			opcTransf.setIcon(ImgTransf);
-		opcDebito = new JButton("Cadastrar Débito Automático");
+		opcDebito = new JButton(BundleLocale.getString("tela.menuOpcoes.button4"));
 			opcDebito.setIcon(ImgDebito);
 			
-		Cancelar = new JButton("Cancelar");
+		Cancelar = new JButton(BundleLocale.getString("tela.button.cancelar"));
 		Base = new JPanel();
 		Topo = new JPanel();
 		Conteudo = new JPanel();
@@ -78,40 +83,46 @@ public class MenuUsuario extends JFrame implements ActionListener{
 	opcSaque.addActionListener(new ActionListener() {
 		
 		public void actionPerformed(ActionEvent e) {
-			RealizarSaque sq = new RealizarSaque();
+			RealizarSaque sq = new RealizarSaque(locale, BundleLocale);
 			dispose();
 		}
 	});
 	opcSaldo.addActionListener(new ActionListener() {
 		
 		public void actionPerformed(ActionEvent e) {
-			ConsultarSaldo cs = new ConsultarSaldo();
+			ConsultarSaldo cs = new ConsultarSaldo(locale, BundleLocale);
 			dispose();
 		}
 	});
 	opcExtrato.addActionListener(new ActionListener() {
 
 		public void actionPerformed(ActionEvent e) {
-			TelaExtrato TE = new TelaExtrato();
+			TelaExtrato TE = new TelaExtrato(locale, BundleLocale);
 			dispose();
 		}
 	});
 	
 	opcTransf.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			RealizarTransferencia RT = new RealizarTransferencia();
+			RealizarTransferencia RT = new RealizarTransferencia(locale, BundleLocale);
 			dispose();
 		}
 	});
 	
 	opcDebito.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			CadastrarDebito CD = new CadastrarDebito();
+			CadastrarDebito CD = new CadastrarDebito(locale, BundleLocale);
 			dispose();
 		}
 	});
 	
 	}
+	
+	public void setLocation(Locale locale, ResourceBundle bundle){
+		this.locale = locale;
+		this.BundleLocale = bundle;
+	}
+	
 	public static void main(String[] args) {
 		MenuUsuario us = new MenuUsuario();
 		//saque.pack();

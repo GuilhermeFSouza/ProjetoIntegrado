@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class MenuOperador extends JFrame{
 	private JPanel Base;
@@ -16,15 +18,18 @@ public class MenuOperador extends JFrame{
 	private JLabel frase;
 	private JButton Cancelar;
 	private ImageIcon ImgUsr;
+	public Locale locale;
+	public ResourceBundle BundleLocale;
 	
-	MenuOperador(){
-		super("Menu Opções");
+	MenuOperador(Locale localeParam, ResourceBundle bundleParam){
+		super(bundleParam.getString("tela.menuOpcoesGerenciais.titulo"));
+		setLocation(localeParam, bundleParam);
 		ImgUsr = new ImageIcon("Interface/login.png");
 		frase = new JLabel("<NOME DO FUNCIONÁRIO>", ImgUsr, SwingConstants.CENTER);
 		frase.setHorizontalAlignment(SwingConstants.LEFT);
-		opcNotas = new JButton("Extrair Relatorio de Notas");
-		opcEstat = new JButton("Extrair Relatório de Estatísticas");
-		Cancelar = new JButton("Cancelar");
+		opcNotas = new JButton(BundleLocale.getString("tela.menuOpcoesGerenciais.button1"));
+		opcEstat = new JButton(BundleLocale.getString("tela.menuOpcoesGerenciais.button2"));
+		Cancelar = new JButton(BundleLocale.getString("tela.button.cancelar"));
 		Base = new JPanel();
 		Topo = new JPanel();
 		Conteudo = new JPanel();
@@ -46,18 +51,23 @@ public class MenuOperador extends JFrame{
 		
 		opcNotas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaNotas TN = new TelaNotas();
+				TelaNotas TN = new TelaNotas(locale, BundleLocale);
 				dispose();
 			}
 		});
 		
 		opcEstat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			 TelaExtrairEstatistica ee = new TelaExtrairEstatistica();
+			 TelaExtrairEstatistica ee = new TelaExtrairEstatistica(locale, BundleLocale);
 			 dispose();
 			}
 		});
 			
+	}
+	
+	public void setLocation(Locale locale, ResourceBundle bundle){
+		this.locale = locale;
+		this.BundleLocale = bundle;
 	}
 	public static void main(String[] args) {
 		MenuOperador us = new MenuOperador();

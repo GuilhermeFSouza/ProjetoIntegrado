@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ConsultarSaldo extends JFrame implements ActionListener{
 	private JLabel frase;
@@ -23,24 +25,27 @@ public class ConsultarSaldo extends JFrame implements ActionListener{
 	private ImageIcon ImgUsr;
 	private ImageIcon ImgSaldo;
 	private ImageIcon ImgLimite;
-		ConsultarSaldo(){
-			super("Consultar Saldo");
+	public Locale locale;
+	public ResourceBundle BundleLocale;
+		ConsultarSaldo(Locale localeParam, ResourceBundle bundleParam){
+			super(bundleParam.getString("tela.consultarSaldo.titulo"));
+			setLocation(localeParam, bundleParam);
 			ImgUsr = new ImageIcon("Interface/login.png");
 			ImgSaldo = new ImageIcon("Interface/saldoAtual");
 			ImgLimite = new ImageIcon("Interface/Limite");
-			frase = new JLabel("<NOME DO CLIENTE> - Consultar Saldo", ImgUsr, SwingConstants.LEFT);
-			lblLimite = new JLabel("Limite de Crédito Disponível: $yyy.yyy,yy", ImgLimite, SwingConstants.CENTER);
+			frase = new JLabel("<NOME DO CLIENTE> - "+ BundleLocale.getString("tela.consultarSaldo.titulo"), ImgUsr, SwingConstants.LEFT);
+			lblLimite = new JLabel(BundleLocale.getString("tela.consultarSaldo.label3"), ImgLimite, SwingConstants.CENTER);
 				lblLimite.setVerticalAlignment(SwingConstants.TOP);
 				lblLimite.setVerticalTextPosition(SwingConstants.BOTTOM);
 				lblLimite.setHorizontalTextPosition(SwingConstants.CENTER);
-			lblData = new JLabel("Saldo Consultado em dd/mm/aaaa ", SwingConstants.CENTER);
+			lblData = new JLabel(BundleLocale.getString("tela.consultarSaldo.label1"), SwingConstants.CENTER);
 				lblData.setVerticalAlignment(SwingConstants.BOTTOM);
-			lblSaldoAtual = new JLabel("Saldo Disponível: $ xxx.xxx,xx", ImgSaldo,SwingConstants.CENTER);
+			lblSaldoAtual = new JLabel(BundleLocale.getString("tela.consultarSaldo.label2"), ImgSaldo,SwingConstants.CENTER);
 				lblSaldoAtual.setVerticalTextPosition(SwingConstants.BOTTOM);
 				lblSaldoAtual.setHorizontalTextPosition(SwingConstants.CENTER);
-			Imprimir = new JButton("Imprimir");
-			Terminar = new JButton("Terminar");
-			Voltar = new JButton("Voltar");
+			Imprimir = new JButton(BundleLocale.getString("tela.button.imprimir"));
+			Terminar = new JButton(BundleLocale.getString("tela.button.terminar"));
+			Voltar = new JButton(BundleLocale.getString("tela.button.voltar"));
 			Conteudo = new JPanel(new GridLayout(3,1,10,10));
 			Botoes = new JPanel();
 			Principal = new JPanel();
@@ -49,7 +54,7 @@ public class ConsultarSaldo extends JFrame implements ActionListener{
 			sair = new JMenuItem("Sair");
 			ConteudoFrame = new JPanel(new BorderLayout());
 		//	Conteudo.setLayout(new FlowLayout());
-			Conteudo.setBorder(BorderFactory.createTitledBorder("Informações atuais"));
+			//Conteudo.setBorder(BorderFactory.createTitledBorder("Informações atuais"));
 			Conteudo.setMaximumSize(new Dimension(500,500));
 			Conteudo.add(lblData);
 			Conteudo.add(lblSaldoAtual);
@@ -85,11 +90,16 @@ public class ConsultarSaldo extends JFrame implements ActionListener{
 			
 			Voltar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					MenuUsuario MU = new MenuUsuario();
+					MenuUsuario MU = new MenuUsuario(locale, BundleLocale);
 					dispose();
 				}
 			});
 			
+		}
+		
+		public void setLocation(Locale locale, ResourceBundle bundle){
+			this.locale = locale;
+			this.BundleLocale = bundle;
 		}
 		
 		public static void main(String[] args) {

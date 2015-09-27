@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -45,10 +47,13 @@ public class TelaExtrato extends JFrame implements ItemListener{
 	private JLabel frase;
 	private ImageIcon ImgUsr;
 			selecionaOpcaoHandler	handler = new selecionaOpcaoHandler();
-	public TelaExtrato() {
-		super("Extrato");
+	public Locale locale;
+	public ResourceBundle BundleLocale;
+	public TelaExtrato(Locale localeParam, ResourceBundle bundleParam){
+		super(bundleParam.getString("tela.consultarExtrato.titulo"));
+		setLocation(localeParam, bundleParam);
 		ImgUsr = new ImageIcon("Interface/login.png");
-		frase = new JLabel("<NOME DO CLIENTE> - Consultar Extrato", ImgUsr, SwingConstants.LEFT);
+		frase = new JLabel("<NOME DO CLIENTE> - "+BundleLocale.getString("tela.consultarExtrato.titulo"), ImgUsr, SwingConstants.LEFT);
 		painelRadio = new JPanel();
 		painelSearch = new JPanel();
 		painelPrincipal = new JPanel();
@@ -66,20 +71,20 @@ public class TelaExtrato extends JFrame implements ItemListener{
 			frasejp.add(frase);
 		
 		painelSearch.setLayout(new GridLayout(3,1,2,2));
-			lblData = new JLabel("Data:");
+			lblData = new JLabel(BundleLocale.getString("tela.consultarExtrato.radio1"));
 			painelSearch.add(lblData);
 			txtPesquisar = new JTextField("");
 			painelSearch.add(txtPesquisar);
-			btPesquisar = new JButton("Pesquisar");
+			btPesquisar = new JButton(BundleLocale.getString("tela.consultarExtrato.button1"));
 			painelSearch.add(btPesquisar);
 			painelSearch.setVisible(false);
 		
 		painelRadio.setLayout(new GridLayout(3, 1));
 			painelRadio.setVisible(true);
-			opcData = new JRadioButton("Data",true);
+			opcData = new JRadioButton(BundleLocale.getString("tela.consultarExtrato.radio1"),true);
 			opcData.addItemListener(handler);
-			opcSeteDias = new JRadioButton("7 Dias",false);
-			opcQuinzeDias = new JRadioButton("15 Dias",false);
+			opcSeteDias = new JRadioButton(BundleLocale.getString("tela.consultarExtrato.radio2"),false);
+			opcQuinzeDias = new JRadioButton(BundleLocale.getString("tela.consultarExtrato.radio3"),false);
 			painelRadio.add(opcData);
 			painelRadio.add(opcSeteDias);
 			painelRadio.add(opcQuinzeDias);
@@ -98,8 +103,8 @@ public class TelaExtrato extends JFrame implements ItemListener{
 		barraRolagem = new JScrollPane(tabela);
 		painelBotoes= new JPanel();
 		painelBotoes.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			btVoltar = new JButton("Voltar");
-			btImprimir = new JButton("Imprimir");
+			btVoltar = new JButton(BundleLocale.getString("tela.buttonVoltar"));
+			btImprimir = new JButton(BundleLocale.getString("tela.buttonImprimir"));
 			painelBotoes.add(btVoltar);
 			painelBotoes.add(btImprimir);
 		painelPrincipal.add(BorderLayout.NORTH,painelTopo);
@@ -114,7 +119,7 @@ public class TelaExtrato extends JFrame implements ItemListener{
 		
 		btVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuUsuario MU = new MenuUsuario();
+				MenuUsuario MU = new MenuUsuario(locale, BundleLocale);
 				dispose();
 			}
 		});
@@ -122,11 +127,11 @@ public class TelaExtrato extends JFrame implements ItemListener{
 
 	private void criaJTable() {
 		tabela = new JTable(modelo);
-		modelo.addColumn("Id");
-		modelo.addColumn("Data de Lancamento");
-		modelo.addColumn("D/C");
-		modelo.addColumn("Doc");
-		modelo.addColumn("Valor");
+		modelo.addColumn(BundleLocale.getString("tela.consultarExtrato.table1"));
+		modelo.addColumn(BundleLocale.getString("tela.consultarExtrato.table2"));
+		modelo.addColumn(BundleLocale.getString("tela.consultarExtrato.table3"));
+		modelo.addColumn(BundleLocale.getString("tela.consultarExtrato.table4"));
+		modelo.addColumn(BundleLocale.getString("tela.consultarExtrato.table5"));
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(120);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -154,6 +159,11 @@ public class TelaExtrato extends JFrame implements ItemListener{
 		}
 	}
 
+	public void setLocation(Locale locale, ResourceBundle bundle){
+		this.locale = locale;
+		this.BundleLocale = bundle;
+	}
+	
 	public static void main(String[] args) {
 		TelaExtrato lc = new TelaExtrato();
 		lc.setVisible(true);

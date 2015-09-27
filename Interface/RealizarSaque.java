@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class RealizarSaque extends JFrame implements ActionListener{
 	JLabel frase;
@@ -20,31 +22,34 @@ public class RealizarSaque extends JFrame implements ActionListener{
 	JPanel Opc2;
 	ImageIcon ImgUsr;
 	Dimension tam;
-	RealizarSaque(){
-		super("Realizar Saque");
+	public Locale locale;
+	public ResourceBundle BundleLocale;
+	RealizarSaque(Locale localeParam, ResourceBundle bundleParam){
+		super(bundleParam.getString("tela.realizarSaque.titulo"));
+		setLocation(localeParam, bundleParam);
 		tam = new Dimension(100, 100);
 		ImgUsr = new ImageIcon("Interface/login.png");
-		frase = new JLabel("<NOME DO CLIENTE> - Realizar Saque" , ImgUsr, SwingConstants.CENTER);
+		frase = new JLabel("<NOME DO CLIENTE> - "+ BundleLocale.getString("tela.realizarSaque.titulo") , ImgUsr, SwingConstants.CENTER);
 		frase.setHorizontalAlignment(SwingConstants.LEFT);
-		Imprimir = new JButton("Imprimir");
-		Terminar = new JButton("Terminar");
-		Voltar = new JButton("Voltar");
+		Imprimir = new JButton(BundleLocale.getString("tela.button.imprimir"));
+		Terminar = new JButton(BundleLocale.getString("tela.button.terminar"));
+		Voltar = new JButton(BundleLocale.getString("tela.button.voltar"));
 		Botoes = new JPanel();
 		Principal = new JPanel();
 		Conteudo = new JPanel(new BorderLayout());
-		v10 = new JButton("R$ 10,00");
+		v10 = new JButton(BundleLocale.getString("tela.realizarSaque.button.10"));
 			v10.setPreferredSize(tam);
-		v20 = new JButton("R$ 20,00");
+		v20 = new JButton(BundleLocale.getString("tela.realizarSaque.button.20"));
 			v20.setPreferredSize(tam);
-		v50 = new JButton("R$ 50,00");
+		v50 = new JButton(BundleLocale.getString("tela.realizarSaque.button.50"));
 			v50.setPreferredSize(tam);
-		v100 = new JButton("R$ 100,00");
+		v100 = new JButton(BundleLocale.getString("tela.realizarSaque.button.100"));
 			v100.setPreferredSize(tam);
-		v200 = new JButton("R$ 200,00");
+		v200 = new JButton(BundleLocale.getString("tela.realizarSaque.button.200"));
 			v200.setPreferredSize(tam);
-		v500 = new JButton("R$ 500,00");
+		v500 = new JButton(BundleLocale.getString("tela.realizarSaque.button.500"));
 			v500.setPreferredSize(tam);
-		lblvalor = new JLabel("Valor: ");
+		lblvalor = new JLabel(BundleLocale.getString("tela.realizarSaque.label"));
 		Tfvalor = new JTextField(20);
 		
 		Opc = new JPanel();
@@ -81,9 +86,13 @@ public class RealizarSaque extends JFrame implements ActionListener{
 		
 		Voltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuUsuario MU = new MenuUsuario();
+				MenuUsuario MU = new MenuUsuario(locale, BundleLocale);
 				dispose();
 			}
 		});
+	}
+	public void setLocation(Locale locale, ResourceBundle bundle){
+		this.locale = locale;
+		this.BundleLocale = bundle;
 	}
 }

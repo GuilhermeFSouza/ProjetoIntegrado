@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -34,21 +36,24 @@ public class CadastrarDebito extends JFrame implements ActionListener{
 	private JPanel Esquerda;
 	private JPanel Centro;
 	private ImageIcon ImgUsr;
+	public Locale locale;
+	public ResourceBundle BundleLocale;
 	
-	CadastrarDebito(){
-		super("Cadastrar Débito Automático");
+	CadastrarDebito(Locale localeParam, ResourceBundle bundleParam){
+		super(bundleParam.getString("tela.debitoAutomatico.titulo"));
+		setLocation(localeParam, bundleParam);
 		ImgUsr = new ImageIcon("Interface/login.png");
-		frase = new JLabel("<NOME DO CLIENTE> - Cadastrar Débito Automático", ImgUsr, SwingConstants.CENTER);
+		frase = new JLabel("<NOME DO CLIENTE> - "+BundleLocale.getString("tela.debitoAutomatico.titulo"), ImgUsr, SwingConstants.CENTER);
 		frase.setHorizontalAlignment(SwingConstants.LEFT);
 			Botoes = new JPanel();
 				Botoes.setLayout(new FlowLayout(FlowLayout.RIGHT));
-				btCadastrar = new JButton("Cadastrar");
-				btVoltar = new JButton("Voltar");
+				btCadastrar = new JButton(BundleLocale.getString("tela.debitoAutomatico.button1"));
+				btVoltar = new JButton(BundleLocale.getString("tela.button.voltar"));
 				Botoes.add(btCadastrar);
 				Botoes.add(btVoltar);
-			lblCodConsumidor = new JLabel("Cód. Consumidor");
-			lblCodOperadora = new JLabel("Cód. da Operadora");
-			lblDataDebito = new JLabel("Data de Débito");
+			lblCodConsumidor = new JLabel(BundleLocale.getString("tela.debitoAutomatico.label2"));
+			lblCodOperadora = new JLabel(BundleLocale.getString("tela.debitoAutomatico.label1"));
+			lblDataDebito = new JLabel(BundleLocale.getString("tela.debitoAutomatico.label3"));
 			FieldCodConsumidor = new JTextField(15);
 			FieldCodOperadora = new JTextField(15);
 			FieldDataDebito = new JTextField(15);
@@ -94,12 +99,17 @@ public class CadastrarDebito extends JFrame implements ActionListener{
 				
 				btVoltar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						MenuUsuario MU = new MenuUsuario();
+						MenuUsuario MU = new MenuUsuario(locale, BundleLocale);
 						dispose();
 					}
 				});
 	}
 
+	public void setLocation(Locale locale, ResourceBundle bundle){
+		this.locale = locale;
+		this.BundleLocale = bundle;
+	}
+	
 public static void main(String[] args) {
 	CadastrarDebito cd = new CadastrarDebito();
 	cd.setVisible(true);
